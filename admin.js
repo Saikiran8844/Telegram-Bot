@@ -3,9 +3,15 @@ const Subscriber=require('./database')
 
 const {token,bot}= require('./botconfigure')
 const express=require('express')
+
+
 //declare the app 
 const app = express();
 const port = 3000;
+
+// Set the view engine to use EJS
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/users');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));  
@@ -57,15 +63,15 @@ app.get('/admin', (req, res) => {
 });
 
 app.get('/users', async function(req, res) {
-    // get all users from database
-    try {
-      const subscribers = await Subscriber.find({});
-      res.render('users', { subscribers: subscribers });
-    } catch (err) {
-      console.error(err);
-      res.send('Error retrieving subscribers');
-    }
-  });
+  try {
+    const subscribers = await Subscriber.find({});
+    console.log('Subscribers:', subscribers);
+    res.render('users', { subscribers: subscribers });
+  } catch (err) {
+    console.error('Error retrieving subscribers:', err);
+    res.send('Error retrieving subscribers');
+  }
+});
 
 
 // Handle sending messages to subscribers
@@ -120,13 +126,15 @@ app.get('/editbot',(req, res) => {
 
 app.post('/editbot', (req, res) => {
   // Get the updated bot settings from the form data
-  const groupPrivacy = req.body.groupPrivacy;
-  const paymentSettings = req.body.paymentSettings;
+  const groupPrivacy = req.body.groupPrivacy=== true;
+  const paymentSettings = req.body.paymentSettings===false;
 
   // Use the Telegram Bot API to update the bot settings
   bot.setMyCommands([
     { command: 'start', description: 'Start the bot' },
     { command: 'help', description: 'Get help with the bot' },
+  
+
   ]);
 
   bot.setMyPrivacy({ 
@@ -136,7 +144,7 @@ app.post('/editbot', (req, res) => {
   bot.setMyPayments(paymentSettings);
 
   // Send a confirmation message to the bot's chat
-  bot.sendMessage('BOT_CHAT_ID', 'Bot settings updated');
+  bot.sendMessage('Bot settings updated');
 
   // Redirect back to the settings page
   res.redirect('/settings');
