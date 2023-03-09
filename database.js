@@ -4,7 +4,13 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://root:root@database.ptdziec.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true
+}).then(() => {
+  console.log('Connected to MongoDB');
+})
+.catch((error) => {
+  console.error('Error connecting to MongoDB:', error);
 });
+
 
 // define schema for subscribers collection
 const subscriberSchema = new mongoose.Schema({
@@ -23,3 +29,13 @@ const subscriberSchema = new mongoose.Schema({
 const Subscriber = mongoose.model('Subscriber', subscriberSchema);
 
 module.exports = Subscriber;
+
+
+// Retrieve all documents from subscribers collection
+/*Subscriber.find({})
+  .then((subscribers) => {
+    console.log('Subscribers:', subscribers);
+  })
+  .catch((error) => {
+    console.error('Error retrieving subscribers:', error);
+  });*/
