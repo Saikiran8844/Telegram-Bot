@@ -30,7 +30,6 @@ const Subscriber = mongoose.model('Subscriber', subscriberSchema);
 
 module.exports = Subscriber;
 
-
 // Retrieve all documents from subscribers collection
 Subscriber.find({})
   .then((subscribers) => {
