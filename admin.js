@@ -11,7 +11,7 @@ const port = 3000;
 
 // Set the view engine to use EJS
 app.set('view engine', 'ejs');
-app.set('views', __dirname + '/users');
+
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));  
@@ -63,10 +63,10 @@ app.get('/admin', (req, res) => {
 });
 
 app.get('/users', async function(req, res) {
-  try {
+  try{
     const subscribers = await Subscriber.find({});
-    console.log('Subscribers:', subscribers);
-    res.render('users', { subscribers: subscribers });
+    console.log(subscribers);
+    res.render('index',{Subscribers:subscribers})
   } catch (err) {
     console.error('Error retrieving subscribers:', err);
     res.send('Error retrieving subscribers');
