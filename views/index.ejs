@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Welcome to my blog</title>
+  <title>Mongo db Data</title>
 </head>
 <body>
   <h1>Users</h1>
-  <table>
+  <table border=1>
     <thead>
       <tr>
         <th>Username</th>
@@ -13,10 +13,10 @@
       </tr>
     </thead>
     <tbody>
-      <% for (let i = 0; i < subscribers.length; i++) { %>
+      <% for (let i = 0; i < Subscribers.length; i++) { %>
         <tr>
-          <td><%= subscribers[i].username %></td>
-          <td><%= subscribers[i].createdAt %></td>
+          <td><%= Subscribers[i].username %></td>
+          <td><%= Subscribers[i].createdAt %></td>
         </tr>
       <% } %>
     </tbody>
